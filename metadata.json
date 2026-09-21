@@ -1,0 +1,6 @@
+{
+  "name": "CodeCraft",
+  "description": "Learn to code, one snippet at a time. Interactive mobile-first lessons, built-in code playground, gamified practice, and community.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
