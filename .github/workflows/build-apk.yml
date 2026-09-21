@@ -182,23 +182,26 @@ jobs:
           TAG_NAME="debug-apk-build-${GITHUB_RUN_NUMBER}-${GITHUB_RUN_ATTEMPT}"
           TITLE="Debug APK Build #${GITHUB_RUN_NUMBER}"
 
-          NOTES="### Debug APK Build #${GITHUB_RUN_NUMBER}
-
-  - **Build Type**: Automatically generated debug APK
-  - **Builder**: GitHub Actions
-  - **Run Number**: ${GITHUB_RUN_NUMBER}
-  - **Run Attempt**: ${GITHUB_RUN_ATTEMPT}
-  - **Source Commit**: ${GITHUB_SHA}
-  - **Intended Use**: Testing and Quality Assurance
-  - **Production Status**: Not a Play Store production release
-  - **Signing**: Signed only with a temporary debug keystore
-
-  Download the debug APK below from the Assets section to install and test on your device."
+          NOTES_FILE="${RUNNER_TEMP}/release_notes.md"
+          {
+            echo "### Debug APK Build #${GITHUB_RUN_NUMBER}"
+            echo ""
+            echo "- **Build Type**: Automatically generated debug APK"
+            echo "- **Builder**: GitHub Actions"
+            echo "- **Run Number**: ${GITHUB_RUN_NUMBER}"
+            echo "- **Run Attempt**: ${GITHUB_RUN_ATTEMPT}"
+            echo "- **Source Commit**: ${GITHUB_SHA}"
+            echo "- **Intended Use**: Testing and Quality Assurance"
+            echo "- **Production Status**: Not a Play Store production release"
+            echo "- **Signing**: Signed only with a temporary debug keystore"
+            echo ""
+            echo "Download the debug APK below from the Assets section to install and test on your device."
+          } > "$NOTES_FILE"
 
           echo "Publishing release: $TITLE with tag: $TAG_NAME"
           gh release create "$TAG_NAME" "$ASSET_PATH" \
             --title "$TITLE" \
-            --notes "$NOTES" \
+            --notes-file "$NOTES_FILE" \
             --target "$GITHUB_SHA" \
             --latest
 
